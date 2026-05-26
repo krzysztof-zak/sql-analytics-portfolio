@@ -55,10 +55,10 @@ Which products contribute the most to overall company profit, and how concentrat
 
 ## Example Output
 
-| Product | Margin | Rank | Cumulative Margin % | Pareto Group |
-|---|---|---|---|---|
-| Product A | 120000 | 1 | 18.4 | Top 80% |
-| Product B | 98000 | 2 | 31.2 | Top 80% |
+| ProductKey | EnglishProductName | Margin | PercentageMargin | Rank | Cumulative Margin % | Pareto Group |
+|---|---|---|---|---|---|---|
+| 123 | Mountain Bike | 120000 | 34.25 | 1 | 18.4 | Top 80% |
+| 456 | Road Bike | 98000 | 28.10 | 2 | 31.2 | Top 80% |
 
 ---
 
