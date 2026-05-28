@@ -1,7 +1,3 @@
-Got it — you want a **clean, GitHub-style README with the same structure and tone** as your Pareto example. Here is your version:
-
----
-
 # Customer Segmentation & Sales Analytics in SQL
 
 ## Project Overview
