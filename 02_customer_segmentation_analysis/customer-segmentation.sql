@@ -1,4 +1,4 @@
-WITH BasicInfo AS
+WITH Stg_InternetSales AS
 (
 SELECT
 	dc.CustomerKey AS CustomerKey,
@@ -10,7 +10,7 @@ LEFT JOIN DimCustomer dc
 ON fis.CustomerKey = dc.CustomerKey
 LEFT JOIN DimDate dd
 ON fis.OrderDateKey = dd.DateKey
-), Calculations AS
+), Fct_CustomerMetrics AS
 (
 SELECT
 	CustomerKey,
@@ -20,9 +20,9 @@ SELECT
 	MAX(OrderDate) AS LatestOrder,
 	DATEDIFF(MONTH, MAX(OrderDate), GETDATE()) AS TimeFromLastOrder,
 	NTILE(4) OVER(ORDER BY SUM(SalesAmount) DESC) AS ClientQuartile
-FROM BasicInfo
+FROM Stg_InternetSales
 GROUP BY CustomerKey
-), WindowFunctions AS
+), Segmentation AS
 (
 SELECT
 	*,
@@ -34,15 +34,15 @@ SELECT
 		WHEN ClientQuartile = 4 AND TimeFromLastOrder > 24 THEN 'At Risk'
 		ELSE 'Regular'
 	END AS CustomerSegmentation
-FROM Calculations
+FROM Fct_CustomerMetrics
 )
 SELECT
-	wf.CustomerSegmentation,
+	CustomerSegmentation,
 	COUNT(*) CustomersPerSegment,
 	AVG(SalesByCustomer) AvgSalesPerSegment,
-	MAX(SalesByCustomer) BiggestSalePerSegment,
+	MAX(SalesByCustomer) MaxSalesPerSegment,
 	AVG(UniqueOrders * 1.0) AS AvgNumberOfOrders,
 	(COUNT(*) * 1.00 / SUM(COUNT(*)) OVER()) * 100 AS PercentageOfTotalCustomers,
-	SUM(SalesByCustomer) / MAX(CompanySales) AS SegmentSalesContribution
-FROM WindowFunctions wf
+	SUM(SalesByCustomer) / MAX(CompanySales) AS SalesContribution
+FROM Segmentation
 GROUP BY CustomerSegmentation
