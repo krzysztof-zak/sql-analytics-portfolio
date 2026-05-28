@@ -1,125 +1,114 @@
-📊 Customer Segmentation Data Mart (SQL Project)
-🧾 Overview
+Got it — you want a **clean, GitHub-style README with the same structure and tone** as your Pareto example. Here is your version:
 
-This project builds a customer segmentation data mart using SQL on the AdventureWorksDW2022 dataset.
+---
 
-It transforms raw internet sales data into meaningful business insights by grouping customers into segments such as:
+# Customer Segmentation & Sales Analytics in SQL
 
-VIP
-Loyal
-At Risk
-Regular
+## Project Overview
 
-The solution follows a layered analytical SQL architecture, similar to real-world data warehouse and analytics engineering pipelines.
+This project analyzes customer purchasing behavior using SQL window functions, aggregations, and segmentation logic.
 
-🎯 Business Objective
+Using **AdventureWorks data** (`FactInternetSales`, `DimCustomer`, `DimDate`), the query builds a customer-level analytical model that identifies high-value and at-risk customers.
 
-The goal of this project is to:
+The analysis segments customers into **VIP, Loyal, At Risk, and Regular** groups based on:
 
-Identify high-value customers (VIP segment)
-Analyze customer purchasing behavior
-Measure customer retention and activity
-Understand revenue distribution across customer groups
-Support data-driven marketing strategies
-🏗️ Data Architecture
+* Total sales contribution
+* Purchase frequency
+* Recency of orders
+* Sales performance quartiles
 
-The solution is structured into 3 logical layers:
+It also calculates key customer KPIs such as revenue contribution, order behavior, and segment distribution.
 
-🟦 Staging Layer (Stg_InternetSales)
+---
 
-Prepares clean transactional data.
+## SQL Concepts Used
 
-🟨 Customer Metrics Layer (Fct_CustomerMetrics)
+### Aggregations
 
-Aggregates data at customer level.
+* `SUM()`
+* `COUNT(DISTINCT)`
+* `MAX()`
+* `AVG()`
 
-🟥 Segmentation Layer (Segmentation)
+### Window Functions
 
-Applies business rules and analytical enrichment.
+* `SUM() OVER()` (total company sales)
+* `NTILE(4)` (customer quartiles)
+* `RANK() OVER()` (sales ranking)
 
-📌 Data Sources
+### Analytical Logic
 
-The analysis uses the following tables:
+* Customer segmentation rules
+* Recency analysis (DATEDIFF)
+* Revenue contribution calculation
+* Percent-of-total analysis
 
-FactInternetSales → sales transactions
-DimCustomer → customer identifiers
-DimDate → order date information
-⚙️ Transformation Logic
-1. Staging Layer
+### Defensive SQL
 
-Creates a clean transactional dataset containing:
+* `NULLIF()` (avoid division by zero)
+* Handling NULL values in joins
 
-CustomerKey
-SalesAmount
-SalesOrderNumber
-OrderDate
-2. Customer Metrics Layer
+---
 
-Aggregates customer-level KPIs:
+## Dataset
 
-Total Sales per Customer
-Number of Unique Orders
-Latest Purchase Date
-Time Since Last Purchase (months)
-Total Company Sales
-Customer Quartiles using NTILE(4)
-3. Segmentation Layer
+**AdventureWorksDW**
 
-Adds business and analytical features:
+Tables used:
 
-Customer ranking using RANK()
-Percentage contribution to total sales
-Customer segmentation using business rules
-📊 Customer Segments Definition
-Segment	Rule
-VIP	Top quartile AND more than 10 orders
-Loyal	Quartiles 2–3
-At Risk	Bottom quartile AND inactive > 24 months
-Regular	All remaining customers
-📈 Final Output Metrics
+* `FactInternetSales`
+* `DimCustomer`
+* `DimDate`
 
-The final report groups customers by segment and provides:
+---
 
-Number of customers per segment
-Average customer sales
-Maximum customer sales
-Average number of orders
-Percentage of total customers
-Revenue contribution per segment
-📊 Key Business Questions Answered
+## Analytical Logic
 
-This project helps answer:
+The analysis is structured in 3 steps:
 
-Who are the most valuable customers?
-Which customers generate the most revenue?
-Which customers are at risk of churn?
-How is revenue distributed across segments?
-What proportion of customers belong to each group?
-🧾 Example Output
-Segment	Customers	Avg Sales	Max Sales	Avg Orders	% Customers	Revenue Contribution
-VIP	...	...	...	...	...	...
-Loyal	...	...	...	...	...	...
-At Risk	...	...	...	...	...	...
-Regular	...	...	...	...	...	...
-🚀 Technologies Used
-SQL Server (T-SQL)
-Window Functions (RANK, NTILE)
-Common Table Expressions (CTEs)
-Data Warehouse Modeling Concepts
-Analytical SQL Techniques
-🧠 Skills Demonstrated
+### 1. Data Preparation
 
-This project demonstrates:
+Joins sales transactions with customer and date dimensions.
 
-Advanced SQL querying
-Customer segmentation logic
-Data warehouse thinking (layered architecture)
-Business KPI design
-Analytical problem solving
-Window function mastery
-ETL-style transformations in SQL
-📁 Project Structure
-customer-segmentation_analysis/
-│
-├── customer_segmentation.sql
-├── README.md
+### 2. Customer Metrics Calculation
+
+Builds customer-level KPIs:
+
+* Total sales per customer
+* Number of unique orders
+* Latest purchase date
+* Time since last order
+* Sales quartile ranking
+
+### 3. Segmentation Logic
+
+Customers are grouped using business rules:
+
+* **VIP** → Top quartile + high order frequency (>10 orders)
+* **Loyal** → Middle quartiles (2 & 3)
+* **At Risk** → Lowest quartile + inactive >24 months
+* **Regular** → Remaining customers
+
+---
+
+## Key Business Question
+
+Which customers generate the most revenue, and how can we segment them to improve retention, loyalty, and marketing targeting?
+
+---
+
+## Example Output
+
+| CustomerSegmentation | CustomersPerSegment | AvgSalesPerSegment | MaxSalesPerSegment | AvgNumberOfOrders | PercentageOfTotalCustomers | SalesContribution |
+| -------------------- | ------------------- | ------------------ | ------------------ | ----------------- | -------------------------- | ----------------- |
+| VIP                  | 120                 | 8500               | 45000              | 18.4              | 10.2%                      | 55.3%             |
+| Loyal                | 340                 | 4200               | 21000              | 9.7               | 28.6%                      | 32.1%             |
+| At Risk              | 90                  | 1500               | 8000               | 3.2               | 7.5%                       | 5.4%              |
+| Regular              | 640                 | 2100               | 12000              | 5.1               | 53.7%                      | 7.2%              |
+
+---
+
+## File
+
+```
+customer_segmentation.sql
