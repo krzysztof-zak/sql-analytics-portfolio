@@ -1,5 +1,6 @@
 WITH Stg_InternetSales AS
 (
+--Joining tables and selecting basic data needed
 SELECT
 	dc.CustomerKey AS CustomerKey,
 	fis.SalesAmount,
@@ -12,6 +13,7 @@ LEFT JOIN DimDate dd
 ON fis.OrderDateKey = dd.DateKey
 ), Fct_CustomerMetrics AS
 (
+-- Calculating metrics needed for segmentation
 SELECT
 	CustomerKey,
 	SUM(SalesAmount) AS SalesByCustomer,
@@ -23,6 +25,7 @@ SELECT
 FROM Stg_InternetSales
 GROUP BY CustomerKey
 ), Segmentation AS
+-- Segmenting customers into four categories VIP, Loyal, At Risk and Regular
 (
 SELECT
 	*,
@@ -36,6 +39,7 @@ SELECT
 	END AS CustomerSegmentation
 FROM Fct_CustomerMetrics
 )
+-- Calculating statistics about groups
 SELECT
 	CustomerSegmentation,
 	COUNT(*) CustomersPerSegment,
@@ -43,6 +47,6 @@ SELECT
 	MAX(SalesByCustomer) MaxSalesPerSegment,
 	AVG(UniqueOrders * 1.0) AS AvgNumberOfOrders,
 	(COUNT(*) * 1.00 / SUM(COUNT(*)) OVER()) * 100 AS PercentageOfTotalCustomers,
-	SUM(SalesByCustomer) / MAX(CompanySales) AS SalesContribution
+	SUM(SalesByCustomer) * 1.00 / MAX(CompanySales) AS SalesContribution
 FROM Segmentation
 GROUP BY CustomerSegmentation
