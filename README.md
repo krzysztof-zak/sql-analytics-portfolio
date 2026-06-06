@@ -6,30 +6,30 @@ Collection of SQL projects focused on business intelligence, analytics, and repo
 
 # Projects
 
-| Project | Skills Demonstrated |
-|---|---|
-| Profitability Pareto Analysis | Window Functions, Ranking, Cumulative Sums |
-| Customer Segmentation | NTILE, CASE, Aggregations |
-| Sales Trend Analysis | Time Series, DATE Functions |
-| Inventory Analysis | LEAD/LAG, Rolling Metrics |
-| Cohort Retention Analysis | CTEs, Retention Logic |
+| Project                       | Skills Demonstrated                              |
+| ----------------------------- | ------------------------------------------------ |
+| Profitability Pareto Analysis | Window Functions, Ranking, Cumulative Sums       |
+| Customer Segmentation         | NTILE, CASE, Aggregations                        |
+| Sales Trend Analysis          | Time Series, DATE Functions                      |
+| Regional Sales Analysis       | Territory Analysis, Aggregations, Growth Metrics |
+| Cohort Retention Analysis     | CTEs, Retention Logic                            |
 
 ---
 
 # Skills Covered
 
-- Window Functions
-- CTEs
-- Aggregations
-- Ranking Functions
-- Time Series Analysis
-- Cohort Analysis
-- Business Intelligence Metrics
-- Revenue Analytics
-- Profitability Analysis
+* Window Functions
+* CTEs
+* Aggregations
+* Ranking Functions
+* Time Series Analysis
+* Cohort Analysis
+* Business Intelligence Metrics
+* Revenue Analytics
+* Profitability Analysis
 
 ---
 
 # Tools
 
-- SQL Server
+* SQL Server
