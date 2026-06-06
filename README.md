@@ -1,6 +1,6 @@
 # SQL Analytics Portfolio
 
-Collection of SQL projects focused on business intelligence, analytics, and reporting using AdventureWorks and other analytical datasets.
+Collection of SQL projects focused on business intelligence, analytics, and reporting using AdventureWorks.
 
 ---
 
